@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sourabh Bajaj | Software Engineer</title>
+<meta name="description" content="Portfolio of Sourabh Bajaj, software engineer at Google working on TensorFlow and Apache Beam. Data infrastructure, recommendations and large-scale pipelines.">
+<meta property="og:title" content="Sourabh Bajaj | Software Engineer">
+<meta property="og:description" content="TensorFlow, Apache Beam, data pipelines and recommendation systems.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="[ADD LINK]">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ===== THEME TOKENS: change colors here ===== */
+:root{
+  --bg:#060a1c; --surface:#0e1530; --line:#1f2a52; --text:#e8ecff; --muted:#9aa6d6;
+  --a1:#22d3ee; --a2:#a78bfa; --on-accent:#04101a;
+  --glow:0 0 32px rgba(34,211,238,.28);
+  --head:'Space Grotesk',system-ui,sans-serif; --body:'Manrope',system-ui,sans-serif;
+}
+:root[data-theme="light"]{
+  --bg:#f3f6ff; --surface:#ffffff; --line:#d3dcf5; --text:#0f1733; --muted:#4a5686;
+  --a1:#0678a0; --a2:#6d3fd6; --on-accent:#ffffff; --glow:0 8px 28px rgba(109,63,214,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{background:var(--bg);color:var(--text);font:400 1rem/1.7 var(--body);overflow-x:hidden;transition:background .3s}
+h1,h2,h3{font-family:var(--head);line-height:1.1;letter-spacing:-.02em}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--a1);outline-offset:3px;border-radius:6px}
+.wrap{width:min(1100px,92%);margin:0 auto}
+section{padding:96px 0;position:relative;z-index:1}
+h2{font-size:clamp(2rem,5vw,3rem);margin-bottom:12px}
+.lead{color:var(--muted);max-width:60ch;margin-bottom:40px}
+.grad{background:linear-gradient(100deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+#bg{position:fixed;inset:0;z-index:0;width:100%;height:100%;pointer-events:none}
+#glow{position:fixed;width:360px;height:360px;border-radius:50%;pointer-events:none;z-index:0;left:0;top:0;
+  background:radial-gradient(circle,rgba(167,139,250,.16),transparent 65%);transform:translate(-50%,-50%);opacity:0;transition:opacity .3s}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:100;background:linear-gradient(90deg,var(--a1),var(--a2))}
+/* Nav */
+header{position:fixed;top:0;width:100%;z-index:90;backdrop-filter:blur(14px);background:color-mix(in srgb,var(--bg) 78%,transparent);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font:700 1.2rem var(--head);text-decoration:none}
+.links{display:flex;gap:6px;list-style:none;align-items:center}
+.links a{display:block;padding:8px 12px;border-radius:8px;text-decoration:none;color:var(--muted);font-weight:500;font-size:.95rem;transition:color .2s,background .2s}
+.links a:hover,.links a.active{color:var(--text);background:var(--surface)}
+.links a.active{box-shadow:inset 0 -2px var(--a1)}
+.icon-btn{background:var(--surface);border:1px solid var(--line);color:var(--text);width:40px;height:40px;border-radius:10px;cursor:pointer;font-size:1.1rem}
+#burger{display:none}
+@media(max-width:820px){
+  #burger{display:inline-block}
+  .links{position:absolute;top:64px;left:0;right:0;flex-direction:column;background:var(--bg);border-bottom:1px solid var(--line);padding:12px;display:none}
+  .links.open{display:flex}
+}
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:12px;font:700 1rem var(--head);text-decoration:none;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--text);transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-3px);box-shadow:var(--glow)}
+.btn.primary{background:linear-gradient(100deg,var(--a1),var(--a2));color:var(--on-accent);border:0}
+/* Hero */
+#hero{min-height:100vh;display:flex;align-items:center;padding-top:110px}
+#hero h1{font-size:clamp(3rem,10vw,7rem);font-weight:700}
+.role{font:500 clamp(1.2rem,3.5vw,1.9rem) var(--head);margin:18px 0;min-height:2.4rem;color:var(--a1)}
+.caret{display:inline-block;width:3px;height:1.2em;background:var(--a2);vertical-align:middle;margin-left:4px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.value{max-width:56ch;color:var(--muted);font-size:1.15rem;margin-bottom:34px}
+.cta{display:flex;gap:14px;flex-wrap:wrap}
+.hero-in>*{animation:rise .8s both}
+.hero-in>*:nth-child(2){animation-delay:.12s}.hero-in>*:nth-child(3){animation-delay:.24s}.hero-in>*:nth-child(4){animation-delay:.36s}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}}
+/* About */
+.about{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:start}
+.about p{margin-bottom:16px;color:var(--muted)}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px}
+.fact b{display:block;font:700 2.3rem var(--head)}
+.fact span{color:var(--muted);font-size:.9rem}
+@media(max-width:820px){.about{grid-template-columns:1fr}}
+.quick{list-style:none;margin-top:18px;display:grid;gap:8px}
+.quick li{padding-left:22px;position:relative;color:var(--text)}
+.quick li::before{content:"";position:absolute;left:0;top:.7em;width:10px;height:2px;background:var(--a1)}
+/* Skills */
+.skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.skill-box{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px}
+.skill-box h3{font-size:1.3rem;margin-bottom:16px}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{padding:7px 15px;border-radius:999px;border:1px solid var(--line);font-weight:500;font-size:.92rem;transition:all .2s;cursor:default}
+.chip:hover{border-color:var(--a1);color:var(--a1);transform:translateY(-2px);box-shadow:var(--glow)}
+/* Timeline */
+.timeline{position:relative;padding-left:34px}
+.timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--a1),var(--a2))}
+.job{position:relative;margin-bottom:26px}
+.job::before{content:"";position:absolute;left:-34px;top:22px;width:18px;height:18px;border-radius:50%;background:var(--bg);border:3px solid var(--a1);box-shadow:var(--glow)}
+.job-btn{width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px 24px;color:inherit;cursor:pointer;font:inherit;transition:border-color .2s}
+.job-btn:hover,.job-btn[aria-expanded="true"]{border-color:var(--a1)}
+.job-btn h3{font-size:1.3rem}
+.job-btn small{color:var(--muted);display:block;margin-top:4px}
+.job-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s}
+.job-btn[aria-expanded="true"]+.job-body{grid-template-rows:1fr}
+.job-body>div{overflow:hidden}
+.job-body ul{list-style:none;padding:16px 8px 0 8px;display:grid;gap:14px}
+.job-body li{color:var(--muted);padding-left:16px;border-left:2px solid var(--line)}
+.job-body li b{color:var(--text)}
+/* Projects */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+.filter{padding:8px 18px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;font:500 .95rem var(--body)}
+.filter[aria-pressed="true"]{background:var(--a1);color:var(--on-accent);border-color:var(--a1)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px;text-align:left;color:inherit;cursor:pointer;font:inherit;display:flex;flex-direction:column;gap:12px;transition:transform .25s,border-color .25s,box-shadow .25s}
+.card:hover{transform:translateY(-6px) rotate(-.4deg);border-color:var(--a2);box-shadow:var(--glow)}
+.card h3{font-size:1.25rem}
+.card p{color:var(--muted);font-size:.95rem;flex:1}
+.tag{font-size:.78rem;padding:3px 10px;border-radius:6px;background:color-mix(in srgb,var(--a2) 18%,transparent);color:var(--text)}
+.card[hidden]{display:none}
+dialog{margin:auto;width:min(560px,92%);background:var(--surface);color:var(--text);border:1px solid var(--a1);border-radius:20px;padding:32px;box-shadow:var(--glow)}
+dialog::backdrop{background:rgba(3,6,20,.72);backdrop-filter:blur(4px)}
+dialog h3{font-size:1.8rem;margin-bottom:6px}
+dialog p{color:var(--muted);margin:14px 0 18px}
+dialog .row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+/* Education */
+.edu{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.edu .skill-box h3{font-size:1.15rem;margin-bottom:6px}
+.edu small{color:var(--muted)}
+/* Contact */
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+@media(max-width:820px){.contact{grid-template-columns:1fr}}
+form{display:grid;gap:14px}
+label{font-weight:500;font-size:.9rem}
+input,textarea{width:100%;padding:13px 15px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit;margin-top:6px}
+textarea{min-height:130px;resize:vertical}
+.socials{display:flex;flex-wrap:wrap;gap:12px;margin:20px 0}
+.mail-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.mail-row code{background:var(--surface);border:1px solid var(--line);padding:10px 14px;border-radius:10px}
+#toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,120px);background:var(--a1);color:var(--on-accent);padding:10px 22px;border-radius:999px;font-weight:700;z-index:200;transition:transform .3s}
+#toast.show{transform:translate(-50%,0)}
+footer{position:relative;z-index:1;border-top:1px solid var(--line);padding:32px 0;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+/* Scroll reveal: used on the section content */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+}
+.sr{position:absolute;left:-9999px}
+</style>
+</head>
+<body>
+<div id="progress" aria-hidden="true"></div>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div id="glow" aria-hidden="true"></div>
+
+<header>
+  <nav class="wrap" aria-label="Main">
+    <a href="#hero" class="logo" id="logo">SB<span class="grad">.dev</span></a>
+    <ul class="links" id="links"></ul>
+    <div style="display:flex;gap:8px">
+      <button class="icon-btn" id="theme" aria-label="Switch to light mode">☀</button>
+      <button class="icon-btn" id="burger" aria-label="Open menu" aria-expanded="false">☰</button>
+    </div>
+  </nav>
+</header>
+
+<main>
+<section id="hero"><div class="wrap hero-in">
+  <p class="sr">Portfolio of</p>
+  <h1 id="h-name"></h1>
+  <p class="role" aria-live="off"><span id="typed"></span><span class="caret" aria-hidden="true"></span></p>
+  <p class="value" id="h-value"></p>
+  <div class="cta">
+    <a class="btn primary" href="#projects">View Work</a>
+    <a class="btn" id="resume" href="[ADD LINK]" download>Download Resume</a>
+  </div>
+</div></section>
+
+<section id="about"><div class="wrap reveal">
+  <h2>About</h2>
+  <div class="about">
+    <div><div id="about-text"></div><ul class="quick" id="quick"></ul></div>
+    <div class="facts" id="facts"></div>
+  </div>
+</div></section>
+
+<section id="skills"><div class="wrap reveal">
+  <h2>Skills</h2><p class="lead">The tools I reach for when building data-heavy, high-scale systems.</p>
+  <div class="skill-grid" id="skill-grid"></div>
+</div></section>
+
+<section id="experience"><div class="wrap reveal">
+  <h2>Experience</h2><p class="lead">Click a role to see what I built there.</p>
+  <div class="timeline" id="timeline"></div>
+</div></section>
+
+<section id="projects"><div class="wrap reveal">
+  <h2>Projects</h2><p class="lead">Selected work from my jobs and side projects. Open a card for details.</p>
+  <div class="filters" id="filters" role="group" aria-label="Filter projects"></div>
+  <div class="cards" id="cards"></div>
+</div></section>
+
+<section id="education"><div class="wrap reveal">
+  <h2>Education</h2>
+  <div class="edu" id="edu"></div>
+</div></section>
+
+<section id="contact"><div class="wrap reveal">
+  <h2>Let's talk</h2><p class="lead" id="c-lead"></p>
+  <div class="contact">
+    <form id="form">
+      <label>Name<input name="name" required autocomplete="name"></label>
+      <label>Email<input type="email" name="email" required autocomplete="email"></label>
+      <label>Message<textarea name="msg" required></textarea></label>
+      <button class="btn primary" type="submit">Send message</button>
+    </form>
+    <div>
+      <div class="mail-row"><code id="email-show"></code><button class="btn" id="copy" type="button">Copy email</button></div>
+      <div class="socials" id="socials"></div>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <span id="foot"></span>
+  <a class="btn" href="#hero">Back to top ↑</a>
+</div></footer>
+
+<dialog id="modal" aria-labelledby="m-title">
+  <h3 id="m-title"></h3><div class="row" id="m-tags"></div>
+  <p id="m-desc"></p>
+  <div class="row"><a class="btn primary" id="m-link" href="#" target="_blank" rel="noopener">View project</a>
+  <button class="btn" id="m-close" type="button">Close</button></div>
+</dialog>
+<div id="toast" role="status"></div>
+
+<script>
+/* =========================================================
+   EDIT YOUR CONTENT HERE. Anything in [BRACKETS] is a placeholder.
+   ========================================================= */
+const DATA = {
+  name: "Sourabh Bajaj",
+  roles: ["Software Engineer", "Data Infrastructure Builder", "Recommendation Systems Engineer"],
+  value: "I build the pipelines, services and ML tooling that turn huge amounts of data into products people use.",
+  email: "mail@website.com",
+  phone: "+1-123-456-7890",
+  resumeUrl: "[ADD LINK]",            // path or URL of your PDF resume, e.g. "resume.pdf"
+  careerStart: 2014,                  // used for the years-of-experience counter
+  about: [
+    "I'm a software engineer at Google, working on TensorFlow and Apache Beam: the open source tools many teams use to train deep learning models and run batch and streaming data pipelines.",
+    "Before Google I spent almost three years at Coursera as a Senior Software Engineer. I worked across notifications, recommendations, content discovery, data warehousing and the internal tools that data scientists relied on every day.",
+    "I started in quantitative finance, building portfolio models and a backtesting engine, and I hold an M.S. in Computer Science from Georgia Tech."
+  ],
+  quick: ["Currently at Google, Mountain View, CA", "M.S. Computer Science, Georgia Tech (GPA 4.00)", "Open source: Dataduct, QuantSoftware Toolkit"],
+  stats: [
+    { label: "Years of experience", value: "auto" },
+    { label: "Companies", value: 3 },
+    { label: "Projects showcased", value: "auto" },
+    { label: "Degrees", value: 2 }
+  ],
+  skills: [
+    { title: "Languages", items: ["Scala", "Python", "JavaScript", "C++", "SQL", "Java"] },
+    { title: "Platforms & Tools", items: ["AWS", "GCE", "Kafka", "Play", "React", "Docker"] },
+    { title: "Data & ML", items: ["TensorFlow", "Apache Beam", "Hadoop", "Cassandra", "Amazon Redshift", "Collaborative filtering"] }
+  ],
+  experience: [
+    { company: "Google", title: "Software Engineer", place: "Mountain View, CA", dates: "Oct 2016 - Present", points: [
+      ["TensorFlow", "Open source library for numerical computation using data flow graphs, mainly used to train deep learning models."],
+      ["Apache Beam", "A unified model for defining batch and streaming data-parallel pipelines, with language-specific SDKs and runners."]
+    ]},
+    { company: "Coursera", title: "Senior Software Engineer", place: "Mountain View, CA", dates: "Jan 2014 - Oct 2016", points: [
+      ["Notifications", "Service for email, push and in-app messages, with delivery time optimization, tracking, queuing and A/B testing. Also built an internal app for batch marketing campaigns."],
+      ["Recommendations", "Core service behind every recommendation system, used on the homepage and across content discovery. Covered offline training and online serving."],
+      ["Content discovery", "Built a new onboarding experience used to personalize search and browse, plus ranking and indexing improvements."],
+      ["Nostos", "Bulk data processing and ingestion from Hadoop to Cassandra, with a thin REST layer serving offline-computed data online."],
+      ["Dataduct", "Open source workflow framework for creating and managing data pipelines with reusable patterns."],
+      ["Data warehousing", "Set up, designed and managed Amazon Redshift, with a web app for data access and daily ETL through Dataduct."],
+      ["Dev environment", "Docker and AWS analytics environment that standardized Python and R dependencies, with core libraries shared by all data scientists."],
+      ["Data collection", "Internal survey and crowdsourcing platform for creating tasks or embedding surveys across Coursera."],
+      ["Course dashboards", "Instructor dashboards and learner surveying tools with data on assignments and learner activity."]
+    ]},
+    { company: "Lucena Research", title: "Data Scientist", place: "Atlanta, GA", dates: "Summer 2012 and 2013", points: [
+      ["Portfolio management", "Models for portfolio hedging, optimization and price forecasting, plus a strategy backtesting engine."],
+      ["QuantDesk", "Python backend for a web app used by hedge fund managers for portfolio management."]
+    ]}
+  ],
+  categories: ["All", "Data", "Backend", "Machine Learning", "Open Source"],
+  projects: [
+    { name: "TensorFlow", cat: "Machine Learning", tags: ["C++", "Python", "Deep learning"], desc: "Contributing to the open source library for numerical computation with data flow graphs, used for training deep learning models.", link: "[ADD LINK]" },
+    { name: "Apache Beam", cat: "Data", tags: ["Batch", "Streaming", "SDKs"], desc: "Working on the unified programming model for batch and streaming data-parallel pipelines and the runners that execute them.", link: "[ADD LINK]" },
+    { name: "Dataduct", cat: "Open Source", tags: ["Python", "AWS", "ETL"], desc: "Open source workflow framework that uses reusable patterns to create and manage data pipelines, and powers daily ETL into Redshift.", link: "[ADD LINK]" },
+    { name: "Notifications Platform", cat: "Backend", tags: ["Email", "Push", "A/B testing"], desc: "Service for email, push and in-app notifications with delivery time optimization, tracking, queuing and A/B testing.", link: "" },
+    { name: "Nostos", cat: "Data", tags: ["Hadoop", "Cassandra", "REST"], desc: "Bulk data ingestion from Hadoop to Cassandra with a REST layer that serves offline-computed data online.", link: "" },
+    { name: "Recommendation Service", cat: "Machine Learning", tags: ["Offline training", "Online serving"], desc: "Core service for all recommendation systems at Coursera, used on the homepage and throughout content discovery.", link: "" },
+    { name: "QuantSoftware Toolkit", cat: "Open Source", tags: ["Python", "Finance", "ML"], desc: "Open source Python library for financial data analysis and machine learning for finance.", link: "[ADD LINK]" },
+    { name: "GitHub Visualization", cat: "Data", tags: ["D3", "JavaScript"], desc: "Data visualization of Git log data with D3 to analyze project trends over time.", link: "[ADD LINK]" },
+    { name: "Music & Movie Recommenders", cat: "Machine Learning", tags: ["Collaborative filtering", "Public datasets"], desc: "Recommender systems for music and movies using collaborative filtering on public datasets.", link: "[ADD LINK]" }
+  ],
+  education: [
+    { school: "Georgia Institute of Technology", degree: "M.S. in Computer Science", meta: "Atlanta, GA | Aug 2012 - Dec 2013 | GPA 4.00" },
+    { school: "Birla Institute of Technology and Science", degree: "B.E. in Electrical and Electronics", meta: "Pilani, India | Aug 2008 - Jul 2012 | GPA 3.66 (9.15/10.0)" }
+  ],
+  certifications: [],                 // none on the resume: add e.g. { name: "...", issuer: "..." }
+  socials: [
+    { label: "Website", url: "http://www.sourabhbajaj.com" },
+    { label: "GitHub", url: "[ADD LINK]" },
+    { label: "LinkedIn", url: "[ADD LINK]" }
+  ]
+};
+
+/* ============ helpers ============ */
+const $ = (s, r = document) => r.querySelector(s);
+const el = (tag, attrs = {}, html = "") => { const e = document.createElement(tag); Object.assign(e, attrs); e.innerHTML = html; return e; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const isLink = u => u && !u.startsWith("[");
+
+/* ============ render content ============ */
+document.title = DATA.name + " | " + DATA.roles[0];
+$("#h-name").innerHTML = `<span class="grad">${esc(DATA.name)}</span>`;
+$("#h-value").textContent = DATA.value;
+$("#about-text").innerHTML = DATA.about.map(p => `<p>${esc(p)}</p>`).join("");
+$("#quick").innerHTML = DATA.quick.map(q => `<li>${esc(q)}</li>`).join("");
+$("#c-lead").textContent = "Hiring or building something with data at scale? Send me a note.";
+$("#email-show").textContent = DATA.email;
+$("#foot").textContent = `© ${new Date().getFullYear()} ${DATA.name}`;
+if (isLink(DATA.resumeUrl)) $("#resume").href = DATA.resumeUrl;
+
+// nav
+["About", "Skills", "Experience", "Projects", "Education", "Contact"].forEach(n =>
+  $("#links").append(el("li", {}, `<a href="#${n.toLowerCase()}">${n}</a>`)));
+
+// stats
+const years = new Date().getFullYear() - DATA.careerStart;
+DATA.stats.forEach(s => {
+  const v = s.value === "auto" ? (s.label.startsWith("Years") ? years : DATA.projects.length) : s.value;
+  $("#facts").append(el("div", { className: "fact" }, `<b data-count="${v}">0</b><span>${esc(s.label)}</span>`));
+});
+
+// skills
+DATA.skills.forEach(g => $("#skill-grid").append(el("div", { className: "skill-box" },
+  `<h3>${esc(g.title)}</h3><div class="chips">${g.items.map(i => `<span class="chip">${esc(i)}</span>`).join("")}</div>`)));
+
+// timeline
+DATA.experience.forEach((j, i) => {
+  const open = i === 0;
+  $("#timeline").append(el("div", { className: "job" }, `
+    <button class="job-btn" aria-expanded="${open}" aria-controls="job${i}">
+      <h3>${esc(j.title)}, ${esc(j.company)}</h3><small>${esc(j.dates)} | ${esc(j.place)}</small>
+    </button>
+    <div class="job-body" id="job${i}"><div><ul>${j.points.map(p => `<li><b>${esc(p[0])}.</b> ${esc(p[1])}</li>`).join("")}</ul></div></div>`));
+});
+$("#timeline").addEventListener("click", e => {
+  const b = e.target.closest(".job-btn"); if (!b) return;
+  b.setAttribute("aria-expanded", b.getAttribute("aria-expanded") !== "true");
+});
+
+// projects + filter + modal
+DATA.categories.forEach((c, i) => {
+  const b = el("button", { className: "filter", type: "button" }, esc(c));
+  b.setAttribute("aria-pressed", i === 0);
+  b.onclick = () => {
+    document.querySelectorAll(".filter").forEach(x => x.setAttribute("aria-pressed", x === b));
+    document.querySelectorAll(".card").forEach(card => card.hidden = !(c === "All" || card.dataset.cat === c));
+  };
+  $("#filters").append(b);
+});
+const modal = $("#modal");
+DATA.projects.forEach(p => {
+  const c = el("button", { className: "card", type: "button" },
+    `<h3>${esc(p.name)}</h3><p>${esc(p.desc)}</p><div class="chips">${p.tags.map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>`);
+  c.dataset.cat = p.cat;
+  c.onclick = () => {
+    $("#m-title").textContent = p.name;
+    $("#m-tags").innerHTML = [p.cat, ...p.tags].map(t => `<span class="tag">${esc(t)}</span>`).join("");
+    $("#m-desc").textContent = p.desc;
+    const l = $("#m-link"); l.style.display = isLink(p.link) ? "" : "none"; l.href = p.link;
+    modal.showModal();
+  };
+  $("#cards").append(c);
+});
+$("#m-close").onclick = () => modal.close();
+modal.addEventListener("click", e => { if (e.target === modal) modal.close(); });
+
+// education
+DATA.education.forEach(e => $("#edu").append(el("div", { className: "skill-box" },
+  `<h3>${esc(e.school)}</h3><p>${esc(e.degree)}</p><small>${esc(e.meta)}</small>`)));
+if (DATA.certifications.length) DATA.certifications.forEach(c => $("#edu").append(el("div", { className: "skill-box" },
+  `<h3>${esc(c.name)}</h3><small>${esc(c.issuer)}</small>`)));
+
+// socials
+DATA.socials.forEach(s => $("#socials").append(el("a", { className: "btn", href: isLink(s.url) ? s.url : "#contact", target: "_blank", rel: "noopener" }, esc(s.label))));
+$("#socials").append(el("a", { className: "btn", href: "tel:" + DATA.phone.replace(/[^+\d]/g, "") }, esc(DATA.phone)));
+
+/* ============ interactions ============ */
+// theme toggle (remembers choice when storage is available)
+const root = document.documentElement, tbtn = $("#theme");
+function setTheme(t) {
+  root.dataset.theme = t;
+  tbtn.textContent = t === "dark" ? "☀" : "☾";
+  tbtn.setAttribute("aria-label", t === "dark" ? "Switch to light mode" : "Switch to dark mode");
+  try { localStorage.setItem("theme", t); } catch (e) {}
+}
+let saved = "dark"; try { saved = localStorage.getItem("theme") || "dark"; } catch (e) {}
+setTheme(saved);
+tbtn.onclick = () => setTheme(root.dataset.theme === "dark" ? "light" : "dark");
+
+// mobile menu
+$("#burger").onclick = e => {
+  const o = $("#links").classList.toggle("open");
+  e.currentTarget.setAttribute("aria-expanded", o);
+};
+$("#links").addEventListener("click", () => $("#links").classList.remove("open"));
+
+// copy email
+$("#copy").onclick = async () => {
+  try { await navigator.clipboard.writeText(DATA.email); toast("Email copied"); }
+  catch (e) { toast("Copy failed. Select the email and copy it manually."); }
+};
+function toast(t) { const x = $("#toast"); x.textContent = t; x.classList.add("show"); setTimeout(() => x.classList.remove("show"), 2200); }
+
+// mailto form
+$("#form").addEventListener("submit", e => {
+  e.preventDefault();
+  const f = new FormData(e.target);
+  const body = `${f.get("msg")}\n\nFrom: ${f.get("name")} (${f.get("email")})`;
+  location.href = `mailto:${DATA.email}?subject=${encodeURIComponent("Hello from your portfolio")}&body=${encodeURIComponent(body)}`;
+});
+
+// typing effect
+const typed = $("#typed");
+if (reduced) typed.textContent = DATA.roles[0];
+else {
+  let r = 0, ch = 0, del = false;
+  (function tick() {
+    const word = DATA.roles[r];
+    ch += del ? -1 : 1;
+    typed.textContent = word.slice(0, ch);
+    let wait = del ? 35 : 80;
+    if (!del && ch === word.length) { del = true; wait = 1400; }
+    else if (del && ch === 0) { del = false; r = (r + 1) % DATA.roles.length; wait = 350; }
+    setTimeout(tick, wait);
+  })();
+}
+
+// scroll progress
+const bar = $("#progress");
+addEventListener("scroll", () => {
+  const h = document.documentElement;
+  bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + "%";
+}, { passive: true });
+
+// reveal + counters
+function count(n) {
+  const target = +n.dataset.count;
+  if (reduced) { n.textContent = target; return; }
+  const t0 = performance.now();
+  (function step(t) {
+    const p = Math.min((t - t0) / 1200, 1);
+    n.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+    if (p < 1) requestAnimationFrame(step);
+  })(t0);
+}
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  e.target.classList.add("in");
+  e.target.querySelectorAll("[data-count]").forEach(count);
+  io.unobserve(e.target);
+}), { threshold: .12 });
+document.querySelectorAll(".reveal").forEach(n => io.observe(n));
+
+// scroll-spy
+const spy = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) document.querySelectorAll(".links a").forEach(a =>
+    a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id));
+}), { rootMargin: "-45% 0px -50% 0px" });
+document.querySelectorAll("main section").forEach(s => spy.observe(s));
+
+// cursor glow (skipped on touch devices and reduced motion)
+const glow = $("#glow");
+if (!reduced && matchMedia("(hover:hover)").matches) {
+  addEventListener("pointermove", e => { glow.style.opacity = 1; glow.style.left = e.clientX + "px"; glow.style.top = e.clientY + "px"; }, { passive: true });
+}
+
+// background: light particle network, pauses when tab is hidden
+const cv = $("#bg"), cx = cv.getContext("2d");
+let W, H, pts = [];
+function size() {
+  W = cv.width = innerWidth; H = cv.height = innerHeight;
+  pts = Array.from({ length: Math.min(55, Math.floor(W / 28)) }, () => ({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35 }));
+}
+function draw() {
+  cx.clearRect(0, 0, W, H);
+  const s = getComputedStyle(root), c1 = s.getPropertyValue("--a1").trim();
+  cx.fillStyle = c1; cx.strokeStyle = c1;
+  pts.forEach((p, i) => {
+    p.x = (p.x + p.vx + W) % W; p.y = (p.y + p.vy + H) % H;
+    cx.globalAlpha = .55; cx.beginPath(); cx.arc(p.x, p.y, 1.8, 0, 6.28); cx.fill();
+    for (let j = i + 1; j < pts.length; j++) {
+      const d = Math.hypot(p.x - pts[j].x, p.y - pts[j].y);
+      if (d < 130) { cx.globalAlpha = (1 - d / 130) * .22; cx.beginPath(); cx.moveTo(p.x, p.y); cx.lineTo(pts[j].x, pts[j].y); cx.stroke(); }
+    }
+  });
+  if (!reduced && !document.hidden) requestAnimationFrame(draw);
+}
+size(); draw();
+addEventListener("resize", () => { size(); if (reduced) draw(); });
+document.addEventListener("visibilitychange", () => { if (!document.hidden && !reduced) draw(); });
+</script>
+</body>
+</html>
